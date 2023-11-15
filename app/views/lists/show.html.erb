@@ -1,3 +1,4 @@
+<%= link_to 'Back', lists_path %>
 <h1><%= @list.name %></h1>
 
 <ul>
@@ -12,7 +13,6 @@
   <% end %>
 </ul>
 
-<%= link_to 'Back', lists_path %>
 
 <h2>New Bookmark for <%= @list.name %></h2>
 <%= simple_form_for [@list, @bookmark] do |f| %>
