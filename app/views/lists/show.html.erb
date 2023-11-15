@@ -1,22 +1,34 @@
-<%= render 'navbar' %>
-<h1><%= @list.name %></h1>
+<%= render 'shared/navbar' %>
+<div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(<%= image_path('theater.jpg') %>)">
+  <%= @list.name %>
+</div>
 
-<ul>
-  <% unless @list.bookmarks.nil? %>
-    <% @list.bookmarks.each do |bookmark|%>
-      <li>
-        <%= "#{bookmark.movie.title} - #{bookmark.comment}" %>
-        <%= link_to "Delete", bookmark_path(bookmark), data: {turbo_method: :delete , turbo_confirm: "Are you sure?"}
-%>
-      </li>
+<div class="container my-4">
+  <div class="row">
+      <% unless @list.bookmarks.nil? %>
+        <% @list.bookmarks.each do |bookmark|%>
+          <div class="col-12 col-lg-4 my-2">
+            <div class="cards container d-flex justify-content-between">
+              <div class="card my-4" style="width: 50vh;">
+                <%= image_tag bookmark.movie.poster_url, alt: "movie poster", class: 'card-img-top' %>
+                <div class="card-body">
+                  <h5 class="card-title"><strong><%= bookmark.movie.title %></strong> ・ <%=bookmark.movie.rating %><i class="fa-solid fa-star text-warning"></i></h5>
+                  <p class="fw-light justify"><%= bookmark.movie.overview %></p>
+                  <footer class="blockquote-footer"><cite title="comment"><%= bookmark.comment %></cite></footer>
+                  <%= link_to "Delete", bookmark_path(bookmark), class:"btn btn-danger", data: {turbo_method: :delete , turbo_confirm: "Are you sure?"}%>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <div class="container py-4 border">
+    <h2>New Bookmark for <%= @list.name %></h2>
+    <%= simple_form_for [@list, @bookmark] do |f| %>
+      <%= f.association :movie %>
+      <%= f.input :comment %>
+      <%= f.submit %>
     <% end %>
-  <% end %>
-</ul>
-
-
-<h2>New Bookmark for <%= @list.name %></h2>
-<%= simple_form_for [@list, @bookmark] do |f| %>
-  <%= f.association :movie %>
-  <%= f.input :comment %>
-  <%= f.submit %>
-<% end %>
+  </div>
+</div>
