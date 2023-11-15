@@ -6,7 +6,6 @@ class ListsController < ApplicationController
 
   def show
     @bookmark = Bookmark.new
-    @bookmarks = Bookmark.where.associated(:list)
   end
 
   def new

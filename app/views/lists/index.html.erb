@@ -1,4 +1,8 @@
-<h1>Save any kind of movie</h1>
+<%= render 'navbar' %>
+<div class="card-category" style="background-image: url(<%= image_path('theater.jpg') %>)">
+  Save any kind of movie
+</div>
+<h1></h1>
 <h2>My lists</h2>
 <ul>
   <% @lists.each do |list| %>
@@ -7,4 +11,3 @@
     </li>
   <% end %>
 </ul>
-<%= link_to 'New list', new_list_path %>

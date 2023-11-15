@@ -1,9 +1,9 @@
-<%= link_to 'Back', lists_path %>
+<%= render 'navbar' %>
 <h1><%= @list.name %></h1>
 
 <ul>
-  <% unless @bookmarks.nil? %>
-    <% @bookmarks.each do |bookmark|%>
+  <% unless @list.bookmarks.nil? %>
+    <% @list.bookmarks.each do |bookmark|%>
       <li>
         <%= "#{bookmark.movie.title} - #{bookmark.comment}" %>
         <%= link_to "Delete", bookmark_path(bookmark), data: {turbo_method: :delete , turbo_confirm: "Are you sure?"}
