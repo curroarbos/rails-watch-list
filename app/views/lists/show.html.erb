@@ -1,5 +1,5 @@
 <%= render 'shared/navbar' %>
-<div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(<%= image_path('theater.jpg') %>)">
+<div class="card-category shadow" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(<%= image_path('theater.jpg') %>)">
   <%= @list.name %>
 </div>
 
@@ -7,15 +7,18 @@
   <div class="row">
       <% unless @list.bookmarks.nil? %>
         <% @list.bookmarks.each do |bookmark|%>
-          <div class="col-12 col-lg-4 my-2">
+          <div class="col-12 col-lg-4">
             <div class="cards container d-flex justify-content-between">
-              <div class="card my-4" style="width: 50vh;">
+              <div class="card my-4 shadow-sm" style="width: 50vh;">
                 <%= image_tag bookmark.movie.poster_url, alt: "movie poster", class: 'card-img-top' %>
                 <div class="card-body">
-                  <h5 class="card-title"><strong><%= bookmark.movie.title %></strong> ・ <%=bookmark.movie.rating %><i class="fa-solid fa-star text-warning"></i></h5>
+                  <h5 class="card-title"><strong><%= bookmark.movie.title %></strong></h5>
+                  <p><%=bookmark.movie.rating.round(1) %> <i class="fa-solid fa-star text-warning"></i></p>
                   <p class="fw-light justify"><%= bookmark.movie.overview %></p>
                   <footer class="blockquote-footer"><cite title="comment"><%= bookmark.comment %></cite></footer>
-                  <%= link_to "Delete", bookmark_path(bookmark), class:"btn btn-danger", data: {turbo_method: :delete , turbo_confirm: "Are you sure?"}%>
+                  <%= link_to bookmark_path(bookmark), class:"text-danger fs-4", data: {turbo_method: :delete , turbo_confirm: "Are you sure?"} do%>
+                    <i class="fa-solid fa-trash"></i>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -23,7 +26,7 @@
         <% end %>
       <% end %>
     </div>
-  <div class="container py-4 border">
+  <div class="container py-4 border shadow-sm">
     <h2>New Bookmark for <%= @list.name %></h2>
     <%= simple_form_for [@list, @bookmark] do |f| %>
       <%= f.association :movie %>
