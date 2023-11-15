@@ -1,10 +1,13 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show, :create]
+  before_action :set_list, only: %i[show]
   def index
     @lists = List.all
   end
 
-  def show; end
+  def show
+    @bookmark = Bookmark.new
+    @bookmarks = Bookmark.where.associated(:list)
+  end
 
   def new
     @list = List.new
@@ -13,7 +16,7 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     if @list.save
-      redirect_to restaurant_path(@list)
+      redirect_to list_path(@list)
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,6 +29,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:content)
+    params.require(:list).permit(:name)
   end
 end
