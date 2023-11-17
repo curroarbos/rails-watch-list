@@ -1,7 +1,13 @@
 <%= render 'shared/navbar' %>
-<div class="card-category shadow" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(<%= image_path('theater.jpg') %>)">
-  <%= @list.name %>
-</div>
+<% if @list.photo.present? %>
+  <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('<%= cl_image_path @list.photo.key, crop: :fill %>')">
+    <%= @list.name %>
+  </div>
+<% else %>
+  <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= image_path('theater.jpg')%>">
+    <%= @list.name %>
+  </div>
+<% end %>
 
 <div class="container my-4">
   <div class="row">
